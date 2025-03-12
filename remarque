@@ -1,0 +1,54 @@
+
+
+dans game runner il faut enlever l'ajout directement dans le code de la liste de joueurs. On pourrais avoir une méthode qui permette d'ajouter les joueur un par un en demandant leur prénoms
+
+Pour ça il faut mieux découper  les classes, on doit avoir à minima une classe player. Il faudrait laisser dans game le lancement du jeu et la gestion des tours. On pourrais avoir une classe question pour mieux découper qui gère l'affichage le choix du type de question, la gestion de la réponse attendue.
+on pourrait aussi mettre un enum avec le type de question afin de mieux les trier ce qui permettrait de rajouter plus facilement des types de questions.
+Pour pousser plus loin on peut mettre un abstract de question et des classes filles pour chaque type de question, mais ça n'aurait un intéret que si on veut un comportement différent entre les classes, un simple enum me parait plus adapté.
+
+dans la classe player on peut directement mettre les attributs places, purses et inPenaltyBox ce qui permet de retirer les
+
+la méthode createRockQuestion n'est pas réutilisable pour les autres type de questions. Il faudrait la renommer "createQuestion" et lui passer en paramètre le type de question à créer. Dans l'enum on pourrait mettre le string attendue et le récupérer à cet endroit.
+
+la boucle for ligne 21 for (int i = 0; i < 50; i++) { ne prévoit qu'un maximum de 49 questions. On pourrait la remplacer par une boucle while jusqu'a ce que le jeu soit terminé.
+
+
+Les attributs de la classe game sont publics, il faudrait les passer en private et ajouter des getters et setters pour y accéder si besoin.
+
+les tableaux de primitif int et boolean peuvent remplacé par des arraylist de Integer et Boolean.
+
+on doit créer une méthode isGettingOutOfPenaltyBox pour éviter la variable globale isGettingOutOfPenaltyBox qui est inutile et source d'erreur car d'un joueur à l'autre réutilisé.
+
+dans la méthode askQuestion mettre un switch case en se basant sur l'enum créer précédemment.
+
+Les questions ne sont pas randomisé, d'une game à l'autre on va retomber toujours sur les meme questions dans le meme ordre.
+
+Il faut créer une vrai banque de question. On peut créer un fichier pour chaque type de question qui serait chargé au début du jeu.
+
+System.out.println(players.get(currentPlayer)
+                + "'s new location is "
+                + places[currentPlayer]);
+               -> passer par un stringBuilder
+
+
+
+La méthode currentCategory doit passer par un switch case la définition des cases peux aussi être déplacée dans l'enum pour plus de lisibilité. De plus elle ne permet d'efficacement rajouter des catégories en l'état, il faudrait donc aussi pousser plus loin et revoir comment rajouter une catégorie sans avoir à retoucher à cette méthode à chaque fois.
+
+wasCorrectlyAnswered a trop de if else il faut découper.
+Globalement tout le code est à redécouper en méthode plus courtes pour plus de lisibilité et de maintenabilité. ça éviterait aussi les répétitions.
+
+Les test sont inexistants il faut en ajouter pour couvrir tous les cas pratiques.
+
+
+didPlayerWin renvoie false si le player à win et true si il est pas encore à 6. ça fait l'inverse du nom de la méthode.
+
+
+la méthode wrongAnswer ne doit pas s'occuper de faire currentPlayer++ elle ne doit que mettre le joueur en prison et afficher le message, la elle fait 2 choses différentes ça ne va pas.
+Pareil pour la méthode wasCorrectlyAnswered elle ne doit que afficher le message et incrémenter les purses, pas s'occuper de changer de joueur.
+
+
+Ajouter une message de victoire serait plus sympa.
+
+
+
+
